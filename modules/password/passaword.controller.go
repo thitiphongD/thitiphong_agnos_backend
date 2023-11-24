@@ -1,11 +1,9 @@
 package password
 
 import (
-	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/thitiphongD/thitiphong_agnos_backend/helpers"
 	"github.com/thitiphongD/thitiphong_agnos_backend/requests"
-	"log"
 	"net/http"
 )
 
@@ -54,13 +52,4 @@ func NewHTTPPassword(r *gin.Engine) {
 			"num_of_steps": numOfSteps,
 		})
 	})
-}
-
-func toJsonString(data gin.H) string {
-	jsonBytes, err := json.Marshal(data)
-	if err != nil {
-		log.Println("Error converting to JSON:", err)
-		return ""
-	}
-	return string(jsonBytes)
 }
