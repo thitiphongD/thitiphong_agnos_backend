@@ -2,11 +2,12 @@ package main
 
 import (
 	"log"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	database "github.com/thitiphongD/thitiphong_agnos_backend/db"
+	"github.com/thitiphongD/thitiphong_agnos_backend/middlewares"
+	"github.com/thitiphongD/thitiphong_agnos_backend/modules/password"
 )
 
 func main() {
@@ -30,22 +31,11 @@ func main() {
     }
 
 	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
+	r.Use(middlewares.LoggerMiddleware())
+	r.Use(middlewares.CustomRecoveryMiddleware())
+    r.NoRoute(middlewares.NotFoundMiddleware())
+	
+	password.InitPassword(r)
 
-	r.Use(gin.CustomRecovery(func(c *gin.Context, recovered interface{}) {
-		c.JSON(500, gin.H{
-			"error_message": recovered,
-		})
-	}))
-
-	r.NoRoute(func(c *gin.Context) {
-		c.JSON(404, gin.H{
-			"error_message": "404 page not found",
-		})
-	})
 	r.Run()
 }
