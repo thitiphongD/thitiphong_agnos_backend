@@ -31,7 +31,7 @@ func main() {
     }
 
 	r := gin.Default()
-	// r.Use(middlewares.LoggerMiddleware())
+	r.Use(middlewares.LoggerMiddleware())
 	r.Use(middlewares.CustomRecoveryMiddleware())
     r.NoRoute(middlewares.NotFoundMiddleware())
 	
