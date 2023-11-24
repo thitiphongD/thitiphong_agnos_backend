@@ -16,13 +16,13 @@ func main() {
 		log.Fatalf("Error while reading config file %s", err)
 	}
 
-	db, err := db.InitDB()
+	database, err := db.InitDB()
 	if err != nil {
 		log.Fatalf("Error initializing database: %s", err)
 	}
 
 	defer func() {
-		sqlDB, _ := db.DB()
+		sqlDB, _ := database.DB()
 		_ = sqlDB.Close()
 	}()
 
