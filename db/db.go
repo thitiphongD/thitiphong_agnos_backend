@@ -1,37 +1,35 @@
-package database
+package db
 
 import (
 	"fmt"
-	"log"
+	"github.com/thitiphongD/thitiphong_agnos_backend/models"
 	"os"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-func InitDB() *gorm.DB {
-	DB_HOST := os.Getenv("POSTGRES_HOST")
-	DB_NAME := os.Getenv("POSTGRES_DB")
-	DB_USER := os.Getenv("POSTGRES_USER")
-	DB_PORT := os.Getenv("POSTGRES_PORT")
-	DB_PASSWORD := os.Getenv("POSTGRES_PASSWORD")
-	psqlInfo := fmt.Sprintf("host=%s user=%s dbname=%s port=%s password=%s", DB_HOST, DB_USER, DB_NAME, DB_PORT, DB_PASSWORD)
+var Database *gorm.DB
+
+func InitDB() (*gorm.DB, error) {
+	dbHost := os.Getenv("POSTGRES_HOST")
+	dbName := os.Getenv("POSTGRES_DB")
+	dbUser := os.Getenv("POSTGRES_USER")
+	dbPort := os.Getenv("POSTGRES_PORT")
+	dbPassword := os.Getenv("POSTGRES_PASSWORD")
+	psqlInfo := fmt.Sprintf("host=%s user=%s dbname=%s port=%s password=%s", dbHost, dbUser, dbName, dbPort, dbPassword)
 
 	db, err := gorm.Open(postgres.Open(psqlInfo), &gorm.Config{
 		SkipDefaultTransaction: true,
 	})
 
 	if err != nil {
-		log.Fatalf("Error while opening database connection: %s", err)
+		return nil, err
 	}
 
-	// Set connection pool settings
-	sqlDB, err := db.DB()
-	if err != nil {
-		log.Fatalf("Error getting underlying database object: %s", err)
-	}
-	sqlDB.SetMaxOpenConns(10)
-	sqlDB.SetMaxIdleConns(5)
+	db.AutoMigrate(&models.Logger{})
 
-	return db
+	Database = db
+
+	return db, nil
 }
