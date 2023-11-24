@@ -31,7 +31,7 @@ func main() {
 	r.Use(middlewares.CustomRecoveryMiddleware())
 	r.NoRoute(middlewares.NotFoundMiddleware())
 
-	password.InitPassword(r)
+	password.NewHTTPPassword(r)
 
 	r.Run()
 }

@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func InitPassword(r *gin.Engine) {
+func NewHTTPPassword(r *gin.Engine) {
 	r.POST("/api/strong_password_steps", func(c *gin.Context) {
 		//start := time.Now()
 		requestBody := &requests.RequestPassword{}
