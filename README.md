@@ -1,84 +1,64 @@
-Backend:
+# API Documentation and Project Setup Guide
 
-# Backend Strong Password Recommendation steps
+## Overview
 
-## Assignment
+This API is built using the Go programming language with the Gin framework. It uses Nginx as a reverse proxy, PostgreSQL as the database, and Docker for containerization.
 
-1. Setup server with docker compose contains nginx, golang service, postgresql
-2. Build backend server with below API Spec
-3. store log of request , response on postgres database
-4. Write unit test
+## Before deploying the application, ensure that the following prerequisites are met on your deployment server:
 
-   **Input**: password string
-   1 <= password.length <= 40
-   Password contains letters, digits, ‘.’ Dot, or ‘!’ Exclamation mark
+- Docker
+- Docker Compose
 
-   **Output**: minimum number of actions to make the password strong
-
-BASE URL /api/strong_password_steps
-
-## Example 1
-
-Request
-
-```json
-{
-  "init_password": "aA1"
-}
+```bash
+git clone https://github.com/thitiphongD/thitiphong_agnos_backend.git
+cd thitiphong_agnos_backend
 ```
 
-Response
-
-```json
-{
-  "num_of_steps": 3
-}
+```bash
+docker-compose up -d
 ```
 
-## Example 2
+## API Documentation
 
-Request
+### Base URL
 
-```json
-{
-  "init_password": "1445D1cd"
-}
-```
+The base URL for this API is `http://localhost:80`.
 
-Response
+### Endpoints
 
-```json
-{
-  "num_of_steps": 0
-}
-```
+#### 1. Initialize Password
 
-## Logic
+- **Endpoint:** `POST /api/strong_password_steps`
+- **Description:** Initializes a password and returns the number of steps involved in the process.
 
-### Criteria of Strong password
+### Example 1
 
-1. Password length >=6, < 20 characters.
-2. Contains at least 1 lowercase letter, at least 1 uppercase letter, and at least 1 digit
-3. Does not contain 3 repeating characters in a row e.g. 11123
+- **Request:**
+  ```json
+  {
+    "init_password": "aA1"
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "num_of_steps": 3
+  }
+  ```
 
-### Type of actions (steps)
+### Example 2
 
-1. Add one character to password
-2. Remove one character from password,
-3. Replace one character of password with another character
+- **Request:**
 
-## Tech stack
+  ```json
+  {
+    "init_password": "1445D1cd"
+  }
+  ```
 
-Go with Gin framework
-Nginx
-Postgresql
-Docker
-
-## Bonus
-
-1. Easy to maintain code structure
-
-## Deliverables
-
-Reply me via email with your git repo naming = {your_name}\_agnos_backend and README
-how to deploy on local and how to run unit test.
+- **Response:**
+  ```json
+  {
+    "num_of_steps": 0
+  }
+  ```
