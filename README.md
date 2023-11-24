@@ -2,17 +2,16 @@
 
 ## Overview
 
-This API is built using the Go programming language with the Gin framework. It uses Nginx as a reverse proxy, PostgreSQL as the database, and Docker for containerization.
+This API is built using the Go programming language with the Gin framework. It uses Nginx, PostgreSQL, and Docker
 
-## Before deploying the application, ensure that the following prerequisites are met on your deployment server:
-
-- Docker
-- Docker Compose
+#### Step 1
 
 ```bash
 git clone https://github.com/thitiphongD/thitiphong_agnos_backend.git
 cd thitiphong_agnos_backend
 ```
+
+#### Step 2
 
 ```bash
 docker-compose up -d
