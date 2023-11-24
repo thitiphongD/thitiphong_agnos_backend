@@ -12,3 +12,4 @@
  secret.md
  .env
 tmp
+.store
