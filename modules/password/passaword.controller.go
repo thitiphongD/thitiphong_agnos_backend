@@ -12,11 +12,19 @@ func NewHTTPPassword(r *gin.Engine) {
 	r.POST("/api/strong_password_steps", func(c *gin.Context) {
 		requestBody := &requests.RequestPassword{}
 		if err := c.BindJSON(requestBody); err != nil {
+			if err.Error() == "EOF" {
+				c.JSON(http.StatusBadRequest, gin.H{
+					"error": "body must be json",
+				})
+				return
+			}
+
 			c.JSON(http.StatusBadRequest, gin.H{
 				"error": err.Error(),
 			})
 			return
 		}
+
 		numOfSteps := helpers.PasswordStrengthSteps(requestBody.InitPassword)
 
 		c.JSON(http.StatusOK, gin.H{
