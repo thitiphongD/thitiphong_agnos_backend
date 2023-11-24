@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	database "github.com/thitiphongD/thitiphong_agnos_backend/db"
+	db "github.com/thitiphongD/thitiphong_agnos_backend/db"
 	"github.com/thitiphongD/thitiphong_agnos_backend/middlewares"
 	"github.com/thitiphongD/thitiphong_agnos_backend/modules/password"
 )
@@ -16,7 +16,7 @@ func main() {
 		log.Fatalf("Error while reading config file %s", err)
 	}
 
-	db, err := database.InitDB()
+	db, err := db.InitDB()
 	if err != nil {
 		log.Fatalf("Error initializing database: %s", err)
 	}

@@ -3,11 +3,12 @@ package middlewares
 import (
 	"bytes"
 	"fmt"
+	"io"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/thitiphongD/thitiphong_agnos_backend/db"
 	"github.com/thitiphongD/thitiphong_agnos_backend/models"
-	"io"
-	"time"
 )
 
 type customResponseWriter struct {
@@ -42,7 +43,7 @@ func LoggerMiddleware() gin.HandlerFunc {
 
 		c.Request.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
 
-		c.Next() // This processes the request
+		c.Next()
 
 		statusCode := c.Writer.Status()
 		latency := time.Since(startTime)
