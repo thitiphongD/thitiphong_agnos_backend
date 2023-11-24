@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres
+    image: postgres:16.1
     container_name: postgres
     ports:
       - 6500:5432
